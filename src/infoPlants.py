@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from src.constants.status_codes import *
 from src.database import Plant, db
 from flask_jwt_extended import jwt_required, create_access_token, create_refresh_token, get_jwt_identity
+import os
 
 infoPlants = Blueprint("infoPlants", __name__, url_prefix="/api/infoPlants")
 
@@ -19,6 +20,8 @@ def insertPlant():
     db.session.add(plant)
     db.session.commit()
 
+    #os.putenv("currentPlant", f"{plant}")
+
     return jsonify({
         'message': 'Plant inserted',
         'plant': {
@@ -31,7 +34,7 @@ def insertPlant():
 
 
 @infoPlants.get("/getPlants")
-def GetPlants():
+def getPlants():
     plants = Plant.query.all()
     listPlants = []
     for item in plants:
@@ -43,8 +46,6 @@ def GetPlants():
             'opt_temperature': item.opt_temperature}
 
         listPlants.append(obj)
-
-    print(listPlants)
 
     return jsonify({
         'plants': listPlants

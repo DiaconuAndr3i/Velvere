@@ -2,6 +2,7 @@ from flask import Flask
 import os
 from src.auth import auth
 from src.infoPlants import infoPlants
+from src.plantScanner import plantScanner
 from src.database import db
 from flask_jwt_extended import JWTManager
 
@@ -28,6 +29,7 @@ def create_app(test_config=None):
 
     app.register_blueprint(auth)
     app.register_blueprint(infoPlants)
+    app.register_blueprint(plantScanner)
 
     return app
 
