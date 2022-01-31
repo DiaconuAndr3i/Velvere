@@ -45,12 +45,8 @@ def putPlantInGreenHouse():
     opt_humidity = request.json["opt_humidity"]
     opt_temperature = request.json["opt_temperature"]
 
-    plant = {
-        "name": name,
-        "origin_country": origin_country,
-        "opt_humidity": opt_humidity,
-        "opt_temperature": opt_temperature
-    }
+    plant = '{"name": "' + name + '", "origin_country": "' + origin_country \
+            + '", "opt_humidity": "' + opt_humidity + '", "opt_temperature": "' + opt_temperature + '"}'
 
     os.environ['currentPlant'] = f"{plant}"
 

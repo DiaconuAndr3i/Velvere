@@ -34,7 +34,7 @@ def register():
         return jsonify({'error': 'Email is taken'}), HTTP_409_CONFLICT
 
     if User.query.filter_by(nickname=nickname).first() is not None:
-        return jsonify({'error': 'Username is taken'}), HTTP_409_CONFLICT
+        return jsonify({'error': 'Nickname is taken'}), HTTP_409_CONFLICT
 
     pwd_hash = generate_password_hash(password)
 
