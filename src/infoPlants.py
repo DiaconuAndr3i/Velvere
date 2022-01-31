@@ -20,7 +20,14 @@ def insertPlant():
     db.session.add(plant)
     db.session.commit()
 
-    #os.putenv("currentPlant", f"{plant}")
+    plantGreenHouse = {
+        "name": name,
+        "origin_country": origin_country,
+        "opt_humidity": opt_humidity,
+        "opt_temperature": opt_temperature
+    }
+
+    os.environ['currentPlant'] = f"{plantGreenHouse}"
 
     return jsonify({
         'message': 'Plant inserted',

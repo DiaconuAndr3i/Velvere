@@ -26,12 +26,12 @@ def create_app(test_config=None):
     create_databse(app)
     JWTManager(app)
 
-
     app.register_blueprint(auth)
     app.register_blueprint(infoPlants)
     app.register_blueprint(plantScanner)
 
     return app
+
 
 def create_databse(app):
     if not os.path.exists('src/' + os.environ.get('DATABASE_NAME')):
