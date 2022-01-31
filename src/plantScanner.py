@@ -4,6 +4,7 @@ from src.constants.status_codes import *
 import os
 import requests
 from src.database import Plant
+import json
 from flask_jwt_extended import jwt_required, create_access_token, create_refresh_token, get_jwt_identity
 
 plantScanner = Blueprint("plantScanner", __name__, url_prefix="/api/plantScanner")
@@ -21,7 +22,10 @@ def scanResponse():
             "response": "The scanned plant doesn't exist in database. Please insert or choose the plant!"
         }), HTTP_404_NOT_FOUND
 
-    os.environ['currentPlant'] = f"{plants[nr]}"
+    plantForEnv = '{"name": "' + plants[nr]['name'] + '", "origin_country": "' + plants[nr]['origin_country'] \
+                  + '", "opt_humidity": "' + str(plants[nr]['opt_humidity']) + '", "opt_temperature": "' + str(plants[nr][
+                      'opt_temperature']) + '"}'
+    os.environ['currentPlant'] = plantForEnv
 
     return plants[nr]
 
@@ -33,7 +37,7 @@ def showPlantFromGreenHouse():
             "result": "Doesn't exist plant in the greenhouse."
         }), HTTP_404_NOT_FOUND
     return jsonify({
-        "result": os.environ.get('currentPlant')
+        "result": json.loads(os.environ.get('currentPlant'))
     }), HTTP_200_OK
 
 

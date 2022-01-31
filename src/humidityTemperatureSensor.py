@@ -8,24 +8,28 @@ import json
 humidityTemperatureSensor = Blueprint("humidityTemperatureSensor", __name__, url_prefix="/api/humidityTemperatureSensor")
 
 
-@humidityTemperatureSensor.post("/sensorForFertilizer")
+@humidityTemperatureSensor.post("/sensorForHumidityTemperature")
 @jwt_required()
-def sensorForFertilizer():
+def sensorForHumidityTemperature():
     current_user = get_jwt_identity()
     humidity = request.json["humidity"]
     temperature = request.json["temperature"]
     namePlant = json.loads(os.environ.get('currentPlant'))["name"]
     plant = Plant.query.filter_by(name=namePlant).first()
+
     if plant is None:
         return jsonify({
             "response": "Doesn't exist plant in the database."
         }), HTTP_404_NOT_FOUND
-    sensorRecord = Sensor(humidity=humidity, temperature=temperature, id_user = current_user, id_plant=plant.id_plant)
+    sensorRecord = Sensor(humidity=humidity, temperature=temperature, id_user=current_user, id_plant=plant.id_plant)
 
     db.session.add(sensorRecord)
     db.session.commit()
 
     return jsonify({
-        "response": "Response of the sensor it was recorded"
+        "temperature": temperature,
+        "humidity": humidity
     }), HTTP_201_CREATED
+
+
 
