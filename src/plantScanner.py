@@ -6,8 +6,16 @@ import requests
 from src.database import Plant
 import json
 from flask_jwt_extended import jwt_required, create_access_token, create_refresh_token, get_jwt_identity
+import paho.mqtt.client as mqtt
 
 plantScanner = Blueprint("plantScanner", __name__, url_prefix="/api/plantScanner")
+
+
+mqttBroker = "broker.hivemq.com"
+client_temp = mqtt.Client("Optimum_Temperature")
+client_temp.connect(mqttBroker)
+client_hum = mqtt.Client("Optimum_Humidity")
+client_hum.connect(mqttBroker)
 
 
 @plantScanner.get("/scanResponse")
@@ -26,6 +34,9 @@ def scanResponse():
                   + '", "opt_humidity": "' + str(plants[nr]['opt_humidity']) + '", "opt_temperature": "' + str(plants[nr][
                       'opt_temperature']) + '"}'
     os.environ['currentPlant'] = plantForEnv
+
+    client_temp.publish("OPTIMUM_TEMPERATURE", 'OptimumTem: ' + str(plants[nr]['opt_temperature']))
+    client_hum.publish("OPTIMUM_HUMIDITY", 'OptimumHum: ' + str(plants[nr]['opt_humidity']))
 
     return plants[nr]
 

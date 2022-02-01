@@ -2,9 +2,16 @@ from flask import Blueprint, request, jsonify
 from src.constants.status_codes import *
 from src.database import Utilities, db
 from flask_jwt_extended import jwt_required
+import paho.mqtt.client as mqtt
 
 utilities = Blueprint("utilities", __name__, url_prefix="/api/utilities")
 
+
+mqttBroker = "broker.hivemq.com"
+client_water_greenhouse = mqtt.Client("WaterGreenhouse")
+client_water_greenhouse.connect(mqttBroker)
+client_fertilizer = mqtt.Client("FertilizerGreenhouse")
+client_fertilizer.connect(mqttBroker)
 
 @utilities.post("/addUtilities")
 @jwt_required()
@@ -53,6 +60,11 @@ def updateUtility():
     utility = Utilities.query.filter_by(name=name).first()
     utility.quantity = quantity
     db.session.commit()
+
+    if name == 'water':
+        client_water_greenhouse.publish("WATER_GREENHOUSE", f'Water: {quantity}')
+    if name == 'fertilizer':
+        client_fertilizer.publish("FERTILIZER_GREENHOUSE", f'Fertilizer nutrients: {quantity}')
 
     return jsonify({
         "response": "Utility updated"
