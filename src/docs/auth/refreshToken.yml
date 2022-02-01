@@ -2,6 +2,10 @@ Refresh token
 ---
 tags:
   - Authentication
+parameters:
+  - in: header
+    name: Authorization
+    required: true
 responses:
   200:
     description: Refresh token
