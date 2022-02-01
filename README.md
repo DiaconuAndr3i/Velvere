@@ -16,3 +16,4 @@
 <p>For the development I used the <a href="https://flask.palletsprojects.com/en/2.0.x/">Flask</a> framework and for the database, <a href="https://docs.sqlalchemy.org/en/14/">SQLAlchemy</a>.</p>
 <h2>Some photos from mqtt subscriber</h2>
 <img src= "photos/img1.png"/>
+<p>For Mqtt I used a public broker: broker.hivemq.com</p>
