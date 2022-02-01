@@ -1,0 +1,7 @@
+General informations about the plants that are in the database
+---
+tags:
+  - Info Plants
+responses:
+  200:
+    description: Retrieved information from the database

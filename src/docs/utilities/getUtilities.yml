@@ -1,0 +1,7 @@
+Get all utilities
+---
+tags:
+  - Utilities
+responses:
+  200:
+    description: Greenhouse utilities

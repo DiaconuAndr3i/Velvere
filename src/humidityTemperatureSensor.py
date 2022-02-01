@@ -5,6 +5,7 @@ from flask_jwt_extended import jwt_required, create_access_token, create_refresh
 import os
 import json
 import paho.mqtt.client as mqtt
+from flasgger import swag_from
 
 humidityTemperatureSensor = Blueprint("humidityTemperatureSensor", __name__,
                                       url_prefix="/api/humidityTemperatureSensor")
@@ -18,6 +19,7 @@ client_hum.connect(mqttBroker)
 
 @humidityTemperatureSensor.post("/sensorForHumidityTemperature")
 @jwt_required()
+@swag_from('./docs/humidity temperature sensor/humidiyTemperatureSensor.yml')
 def sensorForHumidityTemperature():
     current_user = get_jwt_identity()
     humidity = request.json["humidity"]
@@ -30,7 +32,7 @@ def sensorForHumidityTemperature():
 
     if plant is None:
         return jsonify({
-            "response": "Doesn't exist plant in the database."
+            "response": "Doesn't exist plant in the database"
         }), HTTP_404_NOT_FOUND
     sensorRecord = Sensor(humidity=humidity, temperature=temperature, id_user=current_user, id_plant=plant.id_plant)
 

@@ -1,0 +1,30 @@
+tags:
+  - Info Plants
+parameters:
+  - name: body
+    description: The body should contain plant information
+    in: body
+    required: true
+    schema:
+      type: object
+      required:
+        - "name"
+        - "origin_country"
+        - "opt_humidity"
+        - "opt_temperature"
+      properties:
+        name:
+          type: "string"
+          example: "example"
+        origin_country:
+          type: "string"
+          example: "example"
+        opt_humidity:
+          type: "string"
+          example: "0.1"
+        opt_temperature:
+          type: "string"
+          example: "25"
+responses:
+  200:
+    description: Successfully added plant in the greenhouse

@@ -3,11 +3,14 @@ from src.constants.status_codes import *
 from src.database import Plant, db
 from flask_jwt_extended import jwt_required, create_access_token, create_refresh_token, get_jwt_identity
 import os
+from flasgger import swag_from
 
 infoPlants = Blueprint("infoPlants", __name__, url_prefix="/api/infoPlants")
 
+
 @infoPlants.post("/insert")
 @jwt_required()
+@swag_from('./docs/info Plants/infoPlants.yml')
 def insertPlant():
     name = request.json["name"]
     origin_country = request.json["origin_country"]
@@ -41,11 +44,11 @@ def insertPlant():
 
 
 @infoPlants.get("/getPlants")
+@swag_from('./docs/info Plants/infoPlants.yml')
 def getPlants():
     plants = Plant.query.all()
     listPlants = []
     for item in plants:
-
         obj = {
             'name': item.name,
             'origin_country': item.origin_country,

@@ -1,0 +1,27 @@
+Sensor for ambient humidity and temperature
+---
+tags:
+  - Sensors
+parameters:
+  - name: body
+    description: The body should contain informations scanned by the sensor
+    in: body
+    required: true
+    schema:
+      type: object
+      required:
+        - "humidity"
+        - "temperature"
+      properties:
+        humidity:
+          type: "string"
+          example: "0.4"
+        temperature:
+          type: "string"
+          example: "21"
+responses:
+  201:
+    description: Retrieved information sent to the broker and saved in the database
+
+  404:
+    description: Doesn't exist plant in the database

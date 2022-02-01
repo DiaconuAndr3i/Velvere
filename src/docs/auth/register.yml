@@ -1,0 +1,32 @@
+User Registration
+---
+tags:
+  - Authentication
+parameters:
+  - name: body
+    description: The body should contain the user Registration data
+    in: body
+    required: true
+    schema:
+      type: object
+      required:
+        - "email"
+        - "password"
+        - "nickname"
+      properties:
+        email:
+          type: "email"
+          example: "test@test.com"
+        username:
+          type: "nickname"
+          example: "nickname"
+        password:
+          type: "string"
+          format: password
+          example: "********"
+responses:
+  201:
+    description: Registration successful
+
+  400:
+    description: Fails to register due to bad request data

@@ -7,6 +7,7 @@ from src.database import Plant
 import json
 from flask_jwt_extended import jwt_required, create_access_token, create_refresh_token, get_jwt_identity
 import paho.mqtt.client as mqtt
+from flasgger import swag_from
 
 plantScanner = Blueprint("plantScanner", __name__, url_prefix="/api/plantScanner")
 
@@ -19,6 +20,7 @@ client_hum.connect(mqttBroker)
 
 
 @plantScanner.get("/scanResponse")
+@swag_from('./docs/plantScanner/scanResponse.yml')
 def scanResponse():
     response = requests.get("http://127.0.0.1:5000/api/infoPlants/getPlants")
     plants = response.json()['plants']
@@ -38,10 +40,11 @@ def scanResponse():
     client_temp.publish("OPTIMUM_TEMPERATURE", 'OptimumTem: ' + str(plants[nr]['opt_temperature']))
     client_hum.publish("OPTIMUM_HUMIDITY", 'OptimumHum: ' + str(plants[nr]['opt_humidity']))
 
-    return plants[nr]
+    return plants[nr], HTTP_200_OK
 
 
 @plantScanner.get("/showPlantFromGreenHouse")
+@swag_from('./docs/plantScanner/showPlantFromGreenhouse.yml')
 def showPlantFromGreenHouse():
     if os.environ.get('currentPlant') is None:
         return jsonify({
@@ -54,6 +57,7 @@ def showPlantFromGreenHouse():
 
 @plantScanner.post("/putPlantInGreenHouse")
 @jwt_required()
+@swag_from('./docs/plantScanner/putPlantInGreenhouse.yml')
 def putPlantInGreenHouse():
     name = request.json["name"]
     origin_country = request.json["origin_country"]
@@ -67,4 +71,4 @@ def putPlantInGreenHouse():
 
     return jsonify({
         "response": "Plant added"
-    })
+    }), HTTP_200_OK

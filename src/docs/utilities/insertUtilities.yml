@@ -1,0 +1,28 @@
+Insert utility
+---
+tags:
+  - Utilities
+parameters:
+  - name: body
+    description: The body should contain utility informations
+    in: body
+    required: true
+    schema:
+      type: object
+      required:
+        - "name"
+        - "quantity"
+        - "unit_measure"
+      properties:
+        name:
+          type: "string"
+          example: "name"
+        quantity:
+          type: "string"
+          example: "0"
+        unit_measure:
+          type: "string"
+          example: "0"
+responses:
+  201:
+    description: Utility inserted

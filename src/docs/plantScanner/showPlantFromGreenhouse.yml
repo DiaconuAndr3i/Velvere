@@ -1,0 +1,10 @@
+Plant from greenhouse
+---
+tags:
+  - Info Plants
+responses:
+  200:
+    description: Plant from greenhouse
+
+  404:
+    description: Undefinied plant

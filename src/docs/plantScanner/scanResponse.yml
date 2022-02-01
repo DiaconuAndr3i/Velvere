@@ -1,0 +1,10 @@
+Scanned plant
+---
+tags:
+  - Sensors
+responses:
+  200:
+    description: Scanned plant
+
+  404:
+    description: Undefinied plant

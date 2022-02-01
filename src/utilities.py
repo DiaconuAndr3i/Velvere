@@ -3,9 +3,9 @@ from src.constants.status_codes import *
 from src.database import Utilities, db
 from flask_jwt_extended import jwt_required
 import paho.mqtt.client as mqtt
+from flasgger import swag_from
 
 utilities = Blueprint("utilities", __name__, url_prefix="/api/utilities")
-
 
 mqttBroker = "broker.hivemq.com"
 client_water_greenhouse = mqtt.Client("WaterGreenhouse")
@@ -13,8 +13,10 @@ client_water_greenhouse.connect(mqttBroker)
 client_fertilizer = mqtt.Client("FertilizerGreenhouse")
 client_fertilizer.connect(mqttBroker)
 
+
 @utilities.post("/addUtilities")
 @jwt_required()
+@swag_from('./docs/utilities/insertUtilities.yml')
 def addUtilities():
     name = request.json["name"]
     quantity = request.json["quantity"]
@@ -35,6 +37,7 @@ def addUtilities():
 
 @utilities.get("/getUtilities")
 @jwt_required()
+@swag_from('./docs/utilities/getUtilities.yml')
 def getUtilities():
     allUtilities = Utilities.query.all()
     listUtilities = []
@@ -54,6 +57,7 @@ def getUtilities():
 
 @utilities.put("/updateUtility")
 @jwt_required()
+@swag_from('./docs/utilities/updateUtility.yml')
 def updateUtility():
     name = request.json["name"]
     quantity = request.json["quantity"]

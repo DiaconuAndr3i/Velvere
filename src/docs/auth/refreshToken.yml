@@ -1,0 +1,10 @@
+Refresh token
+---
+tags:
+  - Authentication
+responses:
+  200:
+    description: Refresh token
+
+  401:
+    description: You are not logged in

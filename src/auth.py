@@ -4,12 +4,14 @@ from src.constants.status_codes import *
 from src.database import User, db
 import validators
 from flask_jwt_extended import jwt_required, create_access_token, create_refresh_token, get_jwt_identity
+from flasgger import  swag_from
 
 
 auth = Blueprint("auth", __name__, url_prefix="/api/auth")
 
 
 @auth.post('/register')
+@swag_from('./docs/auth/register.yml')
 def register():
     nickname = request.json["nickname"]
     email = request.json["email"]
@@ -51,7 +53,9 @@ def register():
         }
     }), HTTP_201_CREATED
 
+
 @auth.post("/login")
+@swag_from('./docs/auth/login.yml')
 def login():
     email = request.json.get("email", "")
     password = request.json.get("password", "")
@@ -79,6 +83,7 @@ def login():
 
 @auth.get('/refresh/token')
 @jwt_required(refresh=True)
+@swag_from('./docs/auth/refreshToken.yml')
 def refresh_users_token():
     identity = get_jwt_identity()
     access = create_access_token(identity=identity)

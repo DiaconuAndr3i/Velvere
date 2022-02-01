@@ -1,0 +1,24 @@
+Update utility
+---
+tags:
+  - Sensors
+parameters:
+  - name: body
+    description: The body should contain utility informations
+    in: body
+    required: true
+    schema:
+      type: object
+      required:
+        - "name"
+        - "quantity"
+      properties:
+        name:
+          type: "string"
+          example: "name"
+        quantity:
+          type: "string"
+          example: "0"
+responses:
+  201:
+    description: Utility updated
