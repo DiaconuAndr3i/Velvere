@@ -17,3 +17,6 @@
 <h2>Some photos from mqtt subscriber</h2>
 <img src= "photos/img1.png"/>
 <p>For Mqtt I used a public broker: broker.hivemq.com</p>
+
+<h2>Schema Database/h2>
+<img src = "database_schema.jpeg" />
