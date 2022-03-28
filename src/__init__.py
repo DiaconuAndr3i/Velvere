@@ -46,6 +46,7 @@ def create_app(test_config=None):
 
 
 def create_database(app):
-    if not os.path.exists('src/' + os.environ.get('DATABASE_NAME')):
+    #if not os.path.exists('src/' + os.environ.get('DATABASE_NAME')):
+    if not 'src/database.db':
         db.create_all(app=app)
         print('Created database!')

@@ -60,3 +60,5 @@ def getPlants():
     return jsonify({
         'plants': listPlants
     }), HTTP_200_OK
+
+    #return 'Da', HTTP_200_OK
